@@ -1,0 +1,43 @@
+#include <iostream>
+#include <stack>
+#include <string>
+#include <cctype>
+using namespace std;
+
+int maxNestingDepth(const string& line) {
+    stack<char> depth;
+    int maxDepth = 0;
+    int currentDepth = 0;
+
+    for (int i = 0; i < line.length(); i++) {
+        if (line[i] == '(') {
+            // increase of depth, max comparison
+            currentDepth++;
+            depth.push('(');
+            if(maxDepth < currentDepth){
+                maxDepth = currentDepth;
+            }
+        } 
+        else if (line[i] == ')') {
+            // decrease of depth
+            currentDepth--;
+            depth.pop();
+        }
+    }
+
+    return maxDepth;
+}
+
+int main() {
+    string equation1 = "(1 + (2 * 3) + ((8) - 10) + 7)"; // 3
+    string equation2 = "(1 * (2 + (3 - (4) + 8) - 7 + ((((8))))))"; // 6
+    string equation3 = "(2 + (2 + 3 (2)))"; // 3 
+
+    cout << "Max nesting depth of equation 1: " << maxNestingDepth(equation1) << endl;
+    cout << "Max nesting depth of equation 2: " << maxNestingDepth(equation2) << endl;
+    cout << "Max nesting depth of equation 3: " << maxNestingDepth(equation3) << endl;
+
+    return 0;
+}
+
+
