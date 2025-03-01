@@ -1,0 +1,40 @@
+#include <iostream>
+#include <stack>
+#include <string>
+#include <cctype>
+using namespace std;
+
+
+string makeGood(string s) {
+    stack<char> stk;
+
+    for (int i = 0; i < s.length(); i++) {
+        // bad pair
+        if (!stk.empty() && ((islower(stk.top()) && toupper(stk.top()) == s[i]) || (isupper(stk.top()) && tolower(stk.top()) == s[i]))) {
+            stk.pop();
+            
+        } else { //good pair
+            stk.push(s[i]);
+        }
+    }
+
+    // new string
+    string result;
+    while (!stk.empty()) {
+        result = stk.top() + result;
+        stk.pop();
+    }
+
+    return result;
+}
+
+int main() {
+    string s = "leEeetcode";
+    string one = "AAbcDd";
+    string two = "UnNniVvversity!!";
+
+    cout << "Resulting good string: " <<  makeGood(s) << endl;
+    cout << "Resulting good string: " <<  makeGood(one) << endl;
+    cout << "Resulting good string: " <<  makeGood(two) << endl;
+    return 0;
+}
